@@ -13,6 +13,9 @@
 *.utilisateur
 *.userosscache
 *.sln.docstates
+*.vs
+bin
+obj
 
 # Fichiers spécifiques à l'utilisateur (MonoDevelop/Xamarin Studio)
 *.préférences utilisateur
