@@ -92,6 +92,7 @@ namespace TP2
 		public void CalculerPtsVieApresAttaque(int degats)
 		{
 			int newPtsVie = this.PtsVie-degats;
+
             if (newPtsVie<0)
 			{
 				newPtsVie=0;

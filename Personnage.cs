@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TP2
 {
-    public class Perssonage
+    public class Personnage
     {
 		private const int MIN_DE = 1;
 		private const int MAX_DE = 6;
@@ -102,13 +102,17 @@ namespace TP2
 				degatsDernierCombats = value; }
 		}
 
-		public Perssonage(string nom, Classe classe, List<Sort> sorts,Arme arme)
+		public Personnage(string nom, Classe classe, List<Sort> sorts,Arme arme)
 		{
+
 			this.Nom = nom;
 			this.Classe = classe;
 			this.Sorts = sorts;
 			this.Arme = arme;
 		    this.NbPotion = 0;
+			this.DegatsDernierCombats=new List<int>();
+			this.Sorts=new List<Sort>();
+			this.Stats=new StatsPersonnage(9,5,2);
 		}
 		public void AjoutSort(Sort sort)
 		{
@@ -123,7 +127,7 @@ namespace TP2
 		{
 			return this.Stats.EstMort();
 		}
-		public void Attaquer(Perssonage ennemi)
+		public void Attaquer(Personnage ennemi)
 		{
             if (ennemi is null)
 			{
@@ -161,30 +165,42 @@ namespace TP2
 							degats=DEGATS_ARC;
 							break;
                     }
-
-
 				}
-                switch (ennemi.Arme)
-                {
-                    case Arme.MainsNues:
-                        degats-=ARMURE_DEFAULT;
-                        break;
-                    case Arme.EpeeBouclier:
-                        degats-=ARMURE_EPEE_BOUCLIER;
-                        break;
-                    case Arme.EpeeDeuxMains:
-                        degats-=ARMURE_EPEE_DEUX_MAINS;
-                        break;
-                    case Arme.Arc:
-                        degats-=ARMURE_ARC;
-                        break;
-                }
-                ennemi.stats.CalculerPtsVieApresAttaque(degats);
+
+				ennemi.RecevoirDegats(degats);
 				this.DegatsDernierCombats.Add(degats);
-				ennemi.DegatsDernierCombats.Add(-degats);
+			
 
             }
 		
+        }
+		public void RecevoirDegats(int degats)
+        {
+            if (this.Stats.EstMort())
+            {
+                throw new InvalidOperationException("Le personnage est déjà mort");
+            }
+
+            switch (this.Arme)
+            {
+                case Arme.MainsNues:
+                    degats-=ARMURE_DEFAULT;
+                    break;
+                case Arme.EpeeBouclier:
+                    degats-=ARMURE_EPEE_BOUCLIER;
+                    break;
+                case Arme.EpeeDeuxMains:
+                    degats-=ARMURE_EPEE_DEUX_MAINS;
+                    break;
+                case Arme.Arc:
+                    degats-=ARMURE_ARC;
+                    break;
+            }
+			if(degats>0)
+			{
+                this.Stats.CalculerPtsVieApresAttaque(degats);
+            }
+            this.DegatsDernierCombats.Add(-degats);
         }
 		public void BoirePotion()
 		{
