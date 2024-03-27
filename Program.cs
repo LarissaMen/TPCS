@@ -1,4 +1,4 @@
-﻿namespace TP2CS
+﻿namespace TP2
 {
     internal class Program
     {

@@ -4,59 +4,114 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP2CS
+namespace TP2
 {
     public class StatsPersonnage
     {
-        private int ptsVie;
-
+		private int ptsVie;
+        private int ptsVieMax;
+        private int ptsAttaque;
+        private int ptsDefense;
+        private int ptsExperience;
         public int PtsVie
         {
-            get { return ptsVie; }
-            set { ptsVie = value; }
-        }
-        private int ptsvieMax;
+			get { return ptsVie; }
+			set {
+                if (value<=0)
+                {
+                    throw new ArgumentOutOfRangeException("Le nombre de vie ne dois pas être négative");
+                }
+                ptsVie = value; }
+		}
+		
 
-        public int PtsvieMax
+		public int PtsVieMax
         {
-            get { return ptsvieMax; }
-            set { ptsvieMax = value; }
-        }
+			get { return ptsVieMax; }
+			set
+            {
+                if (value<=0)
+                {
+                    throw new ArgumentOutOfRangeException("Le nombre de vie maximum ne dois pas être négative");
+                }
+                ptsVieMax = value; }
+		}
+		
 
-        private int ptsAttaque;
+		public int PtsAttaque
+        {
+			get { return ptsAttaque; }
+			set {
+                if (value<=0)
+                {
+                    throw new ArgumentOutOfRangeException("Le nombre d'attaque ne dois pas être négative");
+                }
+                ptsAttaque = value; }
+		}
+	
 
-        public int PtsAttaque
+		public int PtsDefense
         {
-            get { return ptsAttaque; }
-            set { ptsAttaque = value; }
-        }
-        private int ptsDefense;
+			get { return ptsDefense; }
+			set {
+                if (value<=0)
+                {
+                    throw new ArgumentOutOfRangeException("Le nombre de defense ne dois pas être négative");
+                }
+                ptsDefense = value; }
+		}
+	
 
-        public int PtsDefense
+		public int PtsExperience
         {
-            get { return ptsDefense; }
-            set { ptsDefense = value; }
-        }
-        private int ptsExperience;
+			get { return ptsExperience; }
+			set { 
+				if(value<0)
+				{
+					throw new ArgumentOutOfRangeException("Le nombre d'experience ne dois pas être négative");
+				}
+					
+				ptsExperience = value; }
+		}
+		public StatsPersonnage(int ptsVieMax,int ptsAttaque,int ptsDefense)
+		{
+			this.ptsVieMax = ptsVieMax;
+			this.PtsAttaque = ptsAttaque;
+			this.PtsDefense = ptsDefense;
+			this.PtsVie=0;
+			this.PtsExperience = 0;
 
-        public int PtsExperience
-        {
-            get { return ptsExperience; }
-            set { ptsExperience = value; }
+		}
+		public bool EstMort()
+		{
+			bool estMort=false;
+			if (this.PtsVie==0)
+                estMort=true;
+			return estMort;
         }
-        public StatsPersonnage(int ptsVieMax, int ptsAttaque, int ptsDefense)
-        {
-            this.PtsvieMax = ptsVieMax;
-            this.PtsAttaque = ptsAttaque;
-            this.PtsDefense = ptsDefense;
-        }
-        public bool EstMort()
-        {
-            return false;
+		public void CalculerPtsVieApresAttaque(int degats)
+		{
+			int newPtsVie = this.PtsVie-degats;
+            if (newPtsVie<0)
+			{
+				newPtsVie=0;
+			}
+			this.PtsVie = newPtsVie;
+			
+		}
+		public void CalculerPtsVieApresBoirePotion(int ptsVie)
+		{
+			int newPtsVie=this.PtsVie+ptsVie;
+			if (newPtsVie>this.PtsVieMax) 
+			{
+				newPtsVie=this.PtsVieMax;
+            }
+            this.PtsVie = newPtsVie;
         }
         public override string ToString()
         {
-            return base.ToString();
+			return $"Pts Vie :{this.PtsVie}" +$"Pts Exp : {this.PtsExperience}";
+
         }
     }
 }

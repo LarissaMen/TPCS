@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP2CS
+namespace TP2
 {
     public enum Classe
     {
         Archer,
-        Marge,
+        Mage,
         Guerrier,
         Assassin,
         Moine,
         Troll,
-        Gobin,
-        Squelette,
+        Goblin,
+        Squellette,
         Faermoore
     }
 }
