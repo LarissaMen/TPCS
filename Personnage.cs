@@ -20,6 +20,31 @@ namespace TP2
         private const int ARMURE_EPEE_DEUX_MAINS = 2;
         private const int ARMURE_ARC = 1;
 
+		private const int NB_PTSVIE_MIN_CLASSE= 1;
+        private const int NB_PTSVIE_MIN_GUERRIER = 2;
+		private const int NB_PTSVIE_MAX_ARCHER = 10;
+        private const int NB_PTSVIE_MAX_MAGE= 4;
+        private const int NB_PTSVIE_MAX_GUERRIER = 20;
+        private const int NB_PTSVIE_MAX_ASSASSIN = 6;
+        private const int NB_PTSVIE_MAX_MOINE=8;
+
+
+        private const int NB_ATTAQUE_MIN_CLASSE = 1;
+        private const int NB_ATTAQUE_MAX_ARCHER = 6;
+        private const int NB_ATTAQUE_MAX_MAGE = 8;
+        private const int NB_ATTAQUE_MAX_GUERRIER = 10;
+        private const int NB_ATTAQUE_MAX_ASSASSIN = 6;
+        private const int NB_ATTAQUE_MAX_ARCHER_MOINE = 8;
+
+		private const int NB_PTS_DEFENSE_MIN_CLASSE = 1;
+        private const int NB_DEFENSE_MAX_ARCHER = 6;
+        private const int NB_DEFENSE_MAX_MAGE = 8;
+        private const int NB_DEFENSE_MAX_GUERRIER = 10;
+        private const int NB_DEFENSE_MAX_ASSASSIN = 6;
+        private const int NB_DEFENSE_MAX_ARCHER_MOINE = 8;
+
+
+
 
 
         private string nom;
@@ -112,8 +137,7 @@ namespace TP2
 		    this.NbPotion = 0;
 			this.DegatsDernierCombats=new List<int>();
 			this.Sorts=new List<Sort>();
-          
-
+            this.Stats= DeterminerStatsPersonnage();
 
         }
 		public void AjoutSort(Sort sort)
@@ -149,10 +173,50 @@ namespace TP2
 				ennemi.RecevoirDegats(degats);
 				ennemi.Stats=ennemi.Stats;
 				this.DegatsDernierCombats.Add(degats);
-
-
 			}
         
+        }
+		private  StatsPersonnage DeterminerStatsPersonnage()
+		{
+            Random aleatoire = new Random();
+            int ptsVieMax =0;
+            int ptsAttaque = 0;
+            int ptsDefense = 0;
+
+            switch (this.Classe)
+			{
+				case Classe.Archer:
+                     ptsAttaque = aleatoire.Next(NB_ATTAQUE_MIN_CLASSE, NB_ATTAQUE_MAX_ARCHER+1);
+                     ptsDefense = aleatoire.Next(NB_PTS_DEFENSE_MIN_CLASSE, NB_DEFENSE_MAX_ARCHER+1);
+                     ptsVieMax=NB_PTSVIE_MAX_ARCHER;
+                    break;
+			    case Classe.Mage:
+                    ptsAttaque = aleatoire.Next(NB_ATTAQUE_MIN_CLASSE, NB_ATTAQUE_MAX_MAGE+1);
+                    ptsDefense = aleatoire.Next(NB_PTS_DEFENSE_MIN_CLASSE, NB_DEFENSE_MAX_MAGE+1);
+                    ptsVieMax=NB_PTSVIE_MAX_MAGE;
+                    break;
+                case Classe.Guerrier:
+                     ptsAttaque = aleatoire.Next(NB_ATTAQUE_MIN_CLASSE, NB_ATTAQUE_MAX_GUERRIER+1);
+                     ptsDefense = aleatoire.Next(NB_PTS_DEFENSE_MIN_CLASSE, NB_DEFENSE_MAX_GUERRIER+1);
+                     ptsVieMax=NB_PTSVIE_MAX_GUERRIER;
+                    break;
+                case Classe.Assassin:
+                    ptsAttaque = aleatoire.Next(NB_ATTAQUE_MIN_CLASSE, NB_ATTAQUE_MAX_ASSASSIN+1);
+                    ptsDefense = aleatoire.Next(NB_PTS_DEFENSE_MIN_CLASSE, NB_DEFENSE_MAX_ASSASSIN+1);
+                    ptsVieMax=NB_PTSVIE_MAX_ASSASSIN;
+                    break;
+                case Classe.Moine:
+                    ptsAttaque = aleatoire.Next(NB_ATTAQUE_MIN_CLASSE, NB_ATTAQUE_MAX_ARCHER_MOINE+1);
+                    ptsDefense = aleatoire.Next(NB_PTS_DEFENSE_MIN_CLASSE, NB_DEFENSE_MAX_ARCHER_MOINE+1);
+                    ptsVieMax=NB_PTSVIE_MAX_MOINE;
+                    break;
+                    default: 
+                    throw new InvalidOperationException("");
+
+   
+            }
+            StatsPersonnage stats = new StatsPersonnage(ptsVieMax, ptsAttaque, ptsDefense);
+            return stats;
         }
 		public void RecevoirDegats(int degats)
         {

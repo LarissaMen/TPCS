@@ -75,7 +75,7 @@ namespace TP2
 		}
 		public StatsPersonnage(int ptsVieMax,int ptsAttaque,int ptsDefense)
 		{
-			this.ptsVieMax = ptsVieMax;
+			this.PtsVieMax = ptsVieMax;
 			this.PtsAttaque = ptsAttaque;
 			this.PtsDefense = ptsDefense;
 			this.PtsVie=ptsVieMax;
@@ -101,6 +101,7 @@ namespace TP2
        
           
 		}
+		
 		public void CalculerPtsVieApresBoirePotion(int ptsVie)
 		{
 			int newPtsVie=this.PtsVie+ptsVie;
