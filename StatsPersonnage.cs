@@ -17,7 +17,7 @@ namespace TP2
         {
 			get { return ptsVie; }
 			set {
-                if (value<=0)
+                if (value<0)
                 {
                     throw new ArgumentOutOfRangeException("Le nombre de vie ne dois pas être négative");
                 }
@@ -78,9 +78,9 @@ namespace TP2
 			this.ptsVieMax = ptsVieMax;
 			this.PtsAttaque = ptsAttaque;
 			this.PtsDefense = ptsDefense;
-			this.PtsVie=0;
-			this.PtsExperience = 0;
-
+			this.PtsVie=ptsVieMax;
+            this.PtsExperience = 0;
+			
 		}
 		public bool EstMort()
 		{
@@ -93,12 +93,13 @@ namespace TP2
 		{
 			int newPtsVie = this.PtsVie-degats;
 
-            if (newPtsVie<0)
+			if (newPtsVie<0)
 			{
 				newPtsVie=0;
 			}
 			this.PtsVie = newPtsVie;
-			
+       
+          
 		}
 		public void CalculerPtsVieApresBoirePotion(int ptsVie)
 		{
