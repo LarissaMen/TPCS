@@ -130,6 +130,7 @@ namespace TP2
 		public Personnage(string nom, Classe classe, List<Sort> sorts,Arme arme)
 		{
 
+
 			this.Nom = nom;
 			this.Classe = classe;
 			this.Sorts = sorts;
@@ -138,6 +139,7 @@ namespace TP2
 			this.DegatsDernierCombats=new List<int>();
 			this.Sorts=new List<Sort>();
             this.Stats= DeterminerStatsPersonnage();
+            MettreAJoursPtsDefense();
 
         }
 		public void AjoutSort(Sort sort)
@@ -169,7 +171,7 @@ namespace TP2
             Random aleatoire = new Random();
             if( aleatoire.Next(MIN_DE, MAX_DE+1)>2)
 			{
-				degats=this.CalculerDegats(ennemi);
+				degats=this.CalculerDegatsInfliges(ennemi);
 				ennemi.RecevoirDegats(degats);
 				ennemi.Stats=ennemi.Stats;
 				this.DegatsDernierCombats.Add(degats);
@@ -196,9 +198,9 @@ namespace TP2
                     ptsVieMax=NB_PTSVIE_MAX_MAGE;
                     break;
                 case Classe.Guerrier:
-                     ptsAttaque = aleatoire.Next(NB_ATTAQUE_MIN_CLASSE, NB_ATTAQUE_MAX_GUERRIER+1);
-                     ptsDefense = aleatoire.Next(NB_PTS_DEFENSE_MIN_CLASSE, NB_DEFENSE_MAX_GUERRIER+1);
-                     ptsVieMax=NB_PTSVIE_MAX_GUERRIER;
+                    ptsAttaque = aleatoire.Next(NB_PTSVIE_MIN_GUERRIER , NB_ATTAQUE_MAX_GUERRIER+1);
+                    ptsDefense = aleatoire.Next(NB_PTS_DEFENSE_MIN_CLASSE, NB_DEFENSE_MAX_GUERRIER+1);
+                    ptsVieMax=NB_PTSVIE_MAX_GUERRIER;
                     break;
                 case Classe.Assassin:
                     ptsAttaque = aleatoire.Next(NB_ATTAQUE_MIN_CLASSE, NB_ATTAQUE_MAX_ASSASSIN+1);
@@ -234,7 +236,7 @@ namespace TP2
             this.DegatsDernierCombats.Add(-degats);
  
         }
-		public int CalculerDegats(Personnage ennemi)
+		public int CalculerDegatsInfliges(Personnage ennemi)
 		{
 			int degats = 0;
 
@@ -260,27 +262,49 @@ namespace TP2
                         degats=DEGATS_ARC;
                         break;
                 }
-
+                return this.stats.PtsAttaque+degats-ennemi.Stats.PtsDefense;
             }
 
-            switch (ennemi.Arme)
-            {
-                case Arme.MainsNues:
-                    degats-=ARMURE_DEFAULT;
-                    break;
-                case Arme.EpeeBouclier:
-                    degats-=ARMURE_EPEE_BOUCLIER;
-                    break;
-                case Arme.EpeeDeuxMains:
-                    degats-=ARMURE_EPEE_DEUX_MAINS;
-                    break;
-                case Arme.Arc:
-                    degats-=ARMURE_ARC;
-                    break;
-            }
+            //switch (ennemi.Arme)
+            //{
+            //    case Arme.MainsNues:
+            //        degats-=ARMURE_DEFAULT;
+            //        break;
+            //    case Arme.EpeeBouclier:
+            //        degats-=ARMURE_EPEE_BOUCLIER;
+            //        break;
+            //    case Arme.EpeeDeuxMains:
+            //        degats-=ARMURE_EPEE_DEUX_MAINS;
+            //        break;
+            //    case Arme.Arc:
+            //        degats-=ARMURE_ARC;
+            //        break;
+            //}
            
             return degats;
 			
+        }
+        public void MettreAJoursPtsDefense()
+        {
+            switch (this.Arme)
+            {
+                case Arme.MainsNues:
+                    this.Stats.PtsDefense+=ARMURE_DEFAULT;
+                    break;
+                case Arme.EpeeBouclier:
+                    this.Stats.PtsDefense+=ARMURE_EPEE_BOUCLIER;
+                    break;
+                case Arme.EpeeDeuxMains:
+                    this.Stats.PtsDefense+=ARMURE_EPEE_DEUX_MAINS;
+                    break;
+                case Arme.Arc:
+                    this.Stats.PtsDefense+=ARMURE_ARC;
+                    break;
+            }
+        }
+        public void MettreajoursPtsVier(Personnage ennemi ,int degat)
+        {
+           ennemi.Stats.PtsVie-=degat;
         }
 		public void BoirePotion()
 		{

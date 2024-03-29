@@ -14,8 +14,7 @@ namespace TP2
         private const int MAX1_RECOMPENSE = 30;
         private const int MIN_RECOMPENSE_M = 31;
         private const int MAX_RECOMPENSE_M = 60;
-  
-        private const int MIN_RECOMPENSE_P = 61;
+     
        
 
         private const int MIN = 1;
@@ -35,8 +34,6 @@ namespace TP2
 
                 joueur = value; }
 		}
-       
-
         public Personnage Ennemi
         {
             get { return ennemi; }
@@ -95,12 +92,12 @@ namespace TP2
                 Console.WriteLine("Vous avez gagné une potion.");
                 this.Joueur.NbPotion += 1;
             }
-            else if (recompense > MAX1_RECOMPENSE && recompense <= MAX_RECOMPENSE_M)
+            else if (recompense > MIN_RECOMPENSE_M && recompense <= MAX_RECOMPENSE_M)
             {
                 Console.WriteLine("Vous avez gagné cinq potions.");
-                this.Joueur.NbPotion += 5;
+                this.Joueur.Stats.PtsVie += 5;
             }
-            else if (recompense > MAX_RECOMPENSE_M && recompense <= MAX_RECOMPENSE)
+            else 
             {
                 Console.WriteLine("Désolé vous n'avez pas gagné de potion.");
             }
