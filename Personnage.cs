@@ -84,7 +84,15 @@ namespace TP2
 		public Arme Arme
 		{
 			get { return arme; }
-			set { arme = value; }
+			set {
+                if (this.Classe==Classe.Mage)
+                {
+                    if (value!=Arme.EpeeBouclier && value!=Arme.EpeeDeuxMains)
+                        arme=value;
+                    else
+                        arme=Arme.MainsNues;
+                }
+                else arme = value; }
 		}
 	
 
@@ -173,7 +181,7 @@ namespace TP2
 			{
 				degats=this.CalculerDegatsInfliges(ennemi);
 				ennemi.RecevoirDegats(degats);
-				ennemi.Stats=ennemi.Stats;
+				
 				this.DegatsDernierCombats.Add(degats);
 			}
         
@@ -264,22 +272,6 @@ namespace TP2
                 }
                 return this.stats.PtsAttaque+degats-ennemi.Stats.PtsDefense;
             }
-
-            //switch (ennemi.Arme)
-            //{
-            //    case Arme.MainsNues:
-            //        degats-=ARMURE_DEFAULT;
-            //        break;
-            //    case Arme.EpeeBouclier:
-            //        degats-=ARMURE_EPEE_BOUCLIER;
-            //        break;
-            //    case Arme.EpeeDeuxMains:
-            //        degats-=ARMURE_EPEE_DEUX_MAINS;
-            //        break;
-            //    case Arme.Arc:
-            //        degats-=ARMURE_ARC;
-            //        break;
-            //}
            
             return degats;
 			

@@ -14,8 +14,6 @@ namespace TP2
         private const int MAX1_RECOMPENSE = 30;
         private const int MIN_RECOMPENSE_M = 31;
         private const int MAX_RECOMPENSE_M = 60;
-     
-       
 
         private const int MIN = 1;
         private const int MAX = 6;
@@ -94,12 +92,12 @@ namespace TP2
             }
             else if (recompense > MIN_RECOMPENSE_M && recompense <= MAX_RECOMPENSE_M)
             {
-                Console.WriteLine("Vous avez gagné cinq potions.");
+                Console.WriteLine("Vous avez gagné cinq points de vie.");
                 this.Joueur.Stats.PtsVie += 5;
             }
             else 
             {
-                Console.WriteLine("Désolé vous n'avez pas gagné de potion.");
+                Console.WriteLine("Désolé vous n'avez pas gagné.");
             }
         }
 
