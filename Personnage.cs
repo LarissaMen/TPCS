@@ -90,7 +90,8 @@ namespace TP2
                     if (value!=Arme.EpeeBouclier && value!=Arme.EpeeDeuxMains)
                         arme=value;
                     else
-                        arme=Arme.MainsNues;
+                        arme=Arme.MainsNues; 
+                        
                 }
                 else arme = value; }
 		}
