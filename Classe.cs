@@ -8,7 +8,7 @@ namespace TP2
 {
     public enum Classe
     {
-        Archer,
+        Archer=1,
         Mage,
         Guerrier,
         Assassin,

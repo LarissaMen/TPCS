@@ -8,7 +8,7 @@ namespace TP2
 {
     public enum Arme
     {
-        MainsNues,
+        MainsNues=1,
         EpeeBouclier,
         EpeeDeuxMains,
         Arc

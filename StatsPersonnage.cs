@@ -8,6 +8,7 @@ namespace TP2
 {
     public class StatsPersonnage
     {
+		private const string STATS_FORMAT = "{0,18} {1,18} {2,18} {3,18}";
 		private int ptsVie;
         private int ptsVieMax;
         private int ptsAttaque;
@@ -113,7 +114,9 @@ namespace TP2
         }
         public override string ToString()
         {
-			return $"Pts Vie :{this.PtsVie}" +$"Pts Exp : {this.PtsExperience}";
+			
+            string resultat = string.Format(STATS_FORMAT, $"Pts Vie :{this.PtsVie}", $"Pts Armure:{this.PtsDefense}", $"Pts Force:{this.PtsAttaque}", $"Pts Exp : {this.PtsExperience}");
+            return resultat;
 
         }
     }

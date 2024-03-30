@@ -8,7 +8,18 @@ namespace TP2
 {
     public class Sort
     {
-		private string nomSort;
+		private const int MIN_BOULE_DE_FEU = 5;
+        private const int MAX_BOULE_DE_FEU = 15;
+
+		private const int MIN_MISSILE_MAGIQUE = 1;
+        private const int MAX_MISSILE_MAGIQUE = 4;
+
+		private const int MIN_FOUDRE = 2;
+        private const int MAX_FOUDRE = 20;
+
+
+
+        private string nomSort;
         private int nbDegatsMin;
         private int nbDegatsMax;
 
@@ -55,14 +66,34 @@ namespace TP2
 		public Sort(string nom)
 		{
 			this.NomSort = nom;
-			this.nbDegatsMin = 0;
-			this.nbDegatsMax = 0;
-		}
+			DeterminerNbDegats();
+
+        }
 		public int GetDegats()
 		{
 			Random aleatoire = new Random();
 
             return aleatoire.Next(this.NbDegatsMin,this.NbDegatsMax+1);
 		}
-	}
+		public void DeterminerNbDegats()
+		{
+			switch (this.NomSort)
+			{
+				case "Boule de feu":
+					this.nbDegatsMin=MIN_BOULE_DE_FEU;
+					this.NbDegatsMax=MAX_BOULE_DE_FEU;
+					break;
+				case "Missile magique":
+                    this.nbDegatsMin=MIN_MISSILE_MAGIQUE;
+                    this.NbDegatsMax=MAX_MISSILE_MAGIQUE;
+                    break;
+                case "Foudre":
+                    this.nbDegatsMin=MIN_FOUDRE;
+                    this.NbDegatsMax=MAX_FOUDRE;
+                    break;
+
+            }
+        }
+     
+    }
 }

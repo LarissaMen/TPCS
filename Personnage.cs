@@ -8,7 +8,8 @@ namespace TP2
 {
     public class Personnage
     {
-		private const int MIN_DE = 1;
+        const string PERSO_FORMAT = "{0,-10}{1,-10}{2,-10}";
+        private const int MIN_DE = 1;
 		private const int MAX_DE = 6;
 		private const int DEGATS_DEFAULT = 1;
         private const int DEGATS_EPEE_BOUCLIER= 3;
@@ -79,25 +80,26 @@ namespace TP2
 
 				classe = value; }
 		}
-	
 
-		public Arme Arme
-		{
-			get { return arme; }
-			set {
-                if (this.Classe==Classe.Mage)
+
+        public Arme Arme
+        {
+            get { return arme; }
+            set
+            {
+                if (this.Classe == Classe.Mage && (value == Arme.EpeeBouclier || value == Arme.EpeeDeuxMains))
                 {
-                    if (value!=Arme.EpeeBouclier && value!=Arme.EpeeDeuxMains)
-                        arme=value;
-                    else
-                        arme=Arme.MainsNues; 
-                        
+                    throw new InvalidOperationException("Le magicien ne peut pas choisir l'arme épée!");
                 }
-                else arme = value; }
-		}
-	
+                else
+                {
+                    arme = value;
+                }
+            }
+        }
 
-		public int NbPotion
+
+        public int NbPotion
         {
 			get { return nbPotion; }
 			set { 
@@ -119,7 +121,7 @@ namespace TP2
 		public List<Sort> Sorts
         {
 			get { return sorts; }
-			private set {
+		    private set {
 				if(value is null)
 				{
 					throw new ArgumentNullException("la liste de sort nedoit  pas être null");
@@ -145,8 +147,8 @@ namespace TP2
 			this.Sorts = sorts;
 			this.Arme = arme;
 		    this.NbPotion = 0;
-			this.DegatsDernierCombats=new List<int>();
-			this.Sorts=new List<Sort>();
+            this.Sorts=sorts;
+            this.DegatsDernierCombats=new List<int>();
             this.Stats= DeterminerStatsPersonnage();
             MettreAJoursPtsDefense();
 
@@ -309,6 +311,25 @@ namespace TP2
 			this.nbPotion--;
 
 		}
-
-	}
+        public override string ToString()
+        {
+            string result =
+                   "Nom :" +this.Nom +"\n"+
+                   "Arme :" +this.Arme+"\n"+
+                   "Classe :" +this.Classe+"\n"+
+                   this.stats.ToString()+"\n";
+              if (this.Sorts.Count > 0)
+            {
+                result+="Sorts :";
+                for (int i = 0; i < this.Sorts.Count; i++)
+                {
+                    
+                    result+= string.Format("{0,20}{1,30}",this.Sorts[i].NomSort ,"Degats = "+this.Sorts[i].NbDegatsMin+"-"+ this.Sorts[i].NbDegatsMax)+"\n"+"       ";
+                }
+            }
+                
+                   
+            return result;
+        }
+    }
 }

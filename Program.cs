@@ -2,12 +2,28 @@
 {
     internal class Program
     {
+        public const int  QUIT= 0;
+       
+        public const int MAX_SORT = 3;
+        
+     
+       
+
         static void Main(string[] args)
         {
-            string nom = ValiderChaineDeCaracteres("Entrer le nom de personnage");
-          
+            Sort sort = new Sort("Boule de feu");
+            Sort sort1 = new Sort("Missile magique");
+            Sort sort2 = new Sort("Foudre");
+            List<Sort> listeSorts = new List<Sort>();
+            listeSorts.Add(sort);
+            listeSorts.Add(sort1);
+            listeSorts.Add(sort2);
 
-            PrintClasse();
+            CreerPersonnage(listeSorts);
+
+
+
+
         }
         public static int ValiderNombre(string phrase, int min, int max)
         {
@@ -41,15 +57,13 @@
         }
         public static void PrintClasse()
         {
-            //string afficheInve = string.Format("\n{0,-1} {1,-50} {2,58}", "#Items", "Description", "Prix");
-            //string afficheInve1 = string.Format("{0,-1} {1,-50} {2,60}", "=====", "============", "======");
-            Console.WriteLine("Quelle classe choisissez vous pour votre personnage?\n");
+           Console.WriteLine("Quelle classe choisissez vous pour votre personnage?\n");
             Console.WriteLine("1- Archer");
             Console.WriteLine("2- Mage");
             Console.WriteLine("3- Guerrier");
             Console.WriteLine("4- Assassin");
             Console.WriteLine("5- Moine");
-            Console.WriteLine("Entrez une valeur entre 1 et 5:");
+          
         }
         public static void PrintArme()
         {
@@ -58,15 +72,17 @@
             Console.WriteLine("2- Épée et bouclier");
             Console.WriteLine("3- Épée à deux mains");
             Console.WriteLine("4- Arc");
-            Console.WriteLine("Entrez une valeur entre 1 et 4:");
+           
         }
-        public static void PrintSort()
+        public static void PrintSort(List<Sort> listeSorts)
         {
-            Console.WriteLine("Quelle sort voulez-vous ajouter?\n");
+            Console.WriteLine("\nQuelle sort voulez-vous ajouter?\n");
             Console.WriteLine("0- Quitter");
-            Console.WriteLine("1- Boule de feu");
-            Console.WriteLine("2- Missile magique");
-            Console.WriteLine("Entrez une valeur entre 0 et 3:");
+            for (int i = 0; i < listeSorts.Count; i++)
+            {
+                Console.WriteLine($"{i+1}"+"-" + $"{listeSorts[i].NomSort}");
+            }
+            
         }
         public static string ValiderChaineDeCaracteres(string question)
         {
@@ -88,6 +104,52 @@
             } while (!succes);
 
             return reponse;
+        }
+        public static void CreerPersonnage(List<Sort> listeSorts)
+        {
+            string nom = ValiderChaineDeCaracteres("Entrer le nom de personnage");
+            PrintClasse();
+            Classe choixClasse = (Classe )ValiderNombre("\nEntrez une valeur entre 1 et 5:", (int)Classe.Archer, (int)Classe.Moine);
+           
+            PrintArme();
+            Arme choixArme=(Arme)ValiderNombre("\nEntrez une valeur entre 1 et 4:",(int)Arme.MainsNues, (int)Arme.Arc);
+            Console.WriteLine(choixArme);
+            List<Sort> sorts = new List<Sort>();
+            Personnage joueur = new Personnage(nom, choixClasse, sorts, choixArme);
+            if (choixClasse==Classe.Mage)
+            {
+                int choixSort;
+               
+                do
+                {
+                    PrintSort(listeSorts);
+                    choixSort=ValiderNombre($"Entrez une valeur entre 0 et {listeSorts.Count+1}:", QUIT,listeSorts.Count+1);
+                    if (choixSort!=QUIT)
+                     joueur.AjoutSort(listeSorts[choixSort-1]);
+                    //sorts.Add(listeSorts[choixSort-1]);
+                   
+                } while (choixSort!=QUIT);
+               
+
+            }
+            
+            //Personnage joueur = new Personnage(nom, choixClasse, sorts, choixArme);
+            foreach (var sort in joueur.Sorts)
+            {
+                Console.WriteLine(sort.NomSort);
+            }
+            Affiche();
+            Console.WriteLine(joueur.ToString());
+
+        }
+        public static void Affiche()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("****************************************************************");
+            Console.WriteLine("*********************Personnage créee***************************");
+            Console.WriteLine("****************************************************************");
+            Console.ForegroundColor = ConsoleColor.White;
+
         }
     }
 }
