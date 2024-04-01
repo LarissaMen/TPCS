@@ -20,7 +20,7 @@ namespace TP2
 			set {
                 if (value<0)
                 {
-                    throw new ArgumentOutOfRangeException("Le nombre de vie ne dois pas être négative");
+                    throw new ArgumentOutOfRangeException("Les points de vie ne doivent pas être négatifs");
                 }
                 ptsVie = value; }
 		}
@@ -33,7 +33,7 @@ namespace TP2
             {
                 if (value<=0)
                 {
-                    throw new ArgumentOutOfRangeException("Le nombre de vie maximum ne dois pas être négative");
+                    throw new ArgumentOutOfRangeException("Les points de vie maximum ne doivent pas être négatifs");
                 }
                 ptsVieMax = value; }
 		}
@@ -43,10 +43,11 @@ namespace TP2
         {
 			get { return ptsAttaque; }
 			set {
-                if (value<=0)
-                {
-                    throw new ArgumentOutOfRangeException("Le nombre d'attaque ne dois pas être négative");
-                }
+				if (value<=0)
+				{
+					throw new ArgumentOutOfRangeException("Les points d'attaques ne doivent pas être négatifs");
+				}
+                
                 ptsAttaque = value; }
 		}
 	
@@ -57,7 +58,7 @@ namespace TP2
 			set {
                 if (value<=0)
                 {
-                    throw new ArgumentOutOfRangeException("Le nombre de defense ne dois pas être négative");
+                    throw new ArgumentOutOfRangeException("Les points de defenses ne doivent pas être négatifs");
                 }
                 ptsDefense = value; }
 		}
@@ -69,7 +70,7 @@ namespace TP2
 			set { 
 				if(value<0)
 				{
-					throw new ArgumentOutOfRangeException("Le nombre d'experience ne dois pas être négative");
+					throw new ArgumentOutOfRangeException("Le point d'experience ne dois pas être négati");
 				}
 					
 				ptsExperience = value; }
@@ -80,6 +81,7 @@ namespace TP2
 			this.PtsAttaque = ptsAttaque;
 			this.PtsDefense = ptsDefense;
 			this.PtsVie=ptsVieMax;
+			//ptsVie à vérifier
             this.PtsExperience = 0;
 			
 		}

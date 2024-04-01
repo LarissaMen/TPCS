@@ -12,7 +12,5 @@ namespace TP2
         EpeeBouclier,
         EpeeDeuxMains,
         Arc
-      
-
     }
 }

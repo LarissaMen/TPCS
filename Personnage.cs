@@ -79,25 +79,49 @@ namespace TP2
 			private set { 
 
 				classe = value; }
+            //questin à poser
 		}
 
 
+        //public Arme Arme
+        //{
+        //    get { return arme; }
+        //    set
+        //    {
+        //        if (this.Classe == Classe.Mage && (value == Arme.EpeeBouclier || value == Arme.EpeeDeuxMains))
+        //        {
+        //            throw new InvalidOperationException("Le magicien ne peut pas choisir l'arme épée!");
+        //        }
+        //        else
+        //        {
+        //            arme = value;
+        //        }
+        //    }
+        //}
         public Arme Arme
         {
             get { return arme; }
             set
             {
-                if (this.Classe == Classe.Mage && (value == Arme.EpeeBouclier || value == Arme.EpeeDeuxMains))
+                if (this.CanChooseEpee(value))
                 {
-                    throw new InvalidOperationException("Le magicien ne peut pas choisir l'arme épée!");
+                    arme = value;
                 }
                 else
                 {
-                    arme = value;
+                    throw new InvalidOperationException("Le magicien ne peut pas choisir l'arme épée!");
                 }
             }
         }
 
+        private bool CanChooseEpee(Arme arme)
+        {
+            if (this.Classe == Classe.Mage && (arme == Arme.EpeeBouclier || arme == Arme.EpeeDeuxMains))
+            {
+                return false;
+            }
+            return true;
+        }
 
         public int NbPotion
         {
@@ -114,7 +138,12 @@ namespace TP2
 		public StatsPersonnage  Stats
 		{
 			get { return stats; }
-			 set { stats = value; }
+			set {
+                if(value is null)
+                {
+                    throw new ArgumentNullException("Les statistiques du personnage ne doivent pas être nulles");
+                }
+                stats = value; }
 		}
 	
 
@@ -124,7 +153,7 @@ namespace TP2
 		    private set {
 				if(value is null)
 				{
-					throw new ArgumentNullException("la liste de sort nedoit  pas être null");
+					throw new ArgumentNullException("la liste de sort ne doit  pas être nulle");
 				}
 				sorts = value; }
 		}
@@ -133,9 +162,7 @@ namespace TP2
 		public List<int> DegatsDernierCombats
         {
 			get { return degatsDernierCombats; }
-			set {
-
-				degatsDernierCombats = value; }
+			set { degatsDernierCombats = value; }
 		}
 
 		public Personnage(string nom, Classe classe, List<Sort> sorts,Arme arme)
@@ -147,13 +174,12 @@ namespace TP2
 			this.Sorts = sorts;
 			this.Arme = arme;
 		    this.NbPotion = 0;
-            this.Sorts=sorts;
             this.DegatsDernierCombats=new List<int>();
             this.Stats= DeterminerStatsPersonnage();
             MettreAJoursPtsDefense();
 
         }
-		public void AjoutSort(Sort sort)
+		public void AjouterSort(Sort sort)
 		{
 			if(sort is null)
 			{
@@ -170,9 +196,9 @@ namespace TP2
 		{
             if (ennemi is null)
 			{
-				throw new ArgumentNullException("Le personnage  ne doit pa être null");
+				throw new ArgumentNullException("Le personnage  ne doit pas être null");
 			}
-                if (this.Stats.EstMort())
+                if (this.EstMort())
 			{
 				throw new InvalidOperationException("Le personnage est déjà mort");
 			}
@@ -183,9 +209,9 @@ namespace TP2
             if( aleatoire.Next(MIN_DE, MAX_DE+1)>2)
 			{
 				degats=this.CalculerDegatsInfliges(ennemi);
-				ennemi.RecevoirDegats(degats);
+				ennemi.RecevoirDegats(ennemi,degats);
 				
-				this.DegatsDernierCombats.Add(degats);
+				this.DegatsDernierCombats.Add(-degats);
 			}
         
         }
@@ -223,34 +249,35 @@ namespace TP2
                     ptsDefense = aleatoire.Next(NB_PTS_DEFENSE_MIN_CLASSE, NB_DEFENSE_MAX_ARCHER_MOINE+1);
                     ptsVieMax=NB_PTSVIE_MAX_MOINE;
                     break;
-                    default: 
-                    throw new InvalidOperationException("");
+                    //default: 
+                    //throw new InvalidOperationException("");
 
    
             }
             StatsPersonnage stats = new StatsPersonnage(ptsVieMax, ptsAttaque, ptsDefense);
             return stats;
         }
-		public void RecevoirDegats(int degats)
+		public void RecevoirDegats(Personnage ennemi ,int degats)
         {
-            if (this.Stats.EstMort())
+            if (ennemi.EstMort())
             {
                 throw new InvalidOperationException("Le personnage est déjà mort");
             }
 
+
 			if(degats>0)
 			{
-                this.Stats.CalculerPtsVieApresAttaque(degats);
+                ennemi.Stats.CalculerPtsVieApresAttaque(degats);
                 
             }
          
-            this.DegatsDernierCombats.Add(-degats);
+            ennemi.DegatsDernierCombats.Add(degats);
  
         }
 		public int CalculerDegatsInfliges(Personnage ennemi)
 		{
 			int degats = 0;
-
+            int degatsInfliges = 0; 
             if (this.Classe==Classe.Mage)
             {
                 degats=this.Sorts[0].GetDegats();
@@ -261,19 +288,19 @@ namespace TP2
                 switch (this.Arme)
                 {
                     case Arme.MainsNues:
-                        degats=DEGATS_DEFAULT;
+                        degatsInfliges=DEGATS_DEFAULT;
                         break;
                     case Arme.EpeeBouclier:
-                        degats=DEGATS_EPEE_BOUCLIER;
+                        degatsInfliges=DEGATS_EPEE_BOUCLIER;
                         break;
                     case Arme.EpeeDeuxMains:
-                        degats=DEGATS_EPEE_DEUX_MAINS;
+                        degatsInfliges=DEGATS_EPEE_DEUX_MAINS;
                         break;
                     case Arme.Arc:
-                        degats=DEGATS_ARC;
+                        degatsInfliges=DEGATS_ARC;
                         break;
                 }
-                return this.stats.PtsAttaque+degats-ennemi.Stats.PtsDefense;
+                degats=this.stats.PtsAttaque+degatsInfliges-ennemi.Stats.PtsDefense;
             }
            
             return degats;
@@ -297,7 +324,7 @@ namespace TP2
                     break;
             }
         }
-        public void MettreajoursPtsVier(Personnage ennemi ,int degat)
+        public void MettreAJoursPtsVie(Personnage ennemi ,int degat)
         {
            ennemi.Stats.PtsVie-=degat;
         }
@@ -319,16 +346,15 @@ namespace TP2
                    "Classe :" +this.Classe+"\n"+
                    this.stats.ToString()+"\n";
               if (this.Sorts.Count > 0)
-            {
+              {
                 result+="Sorts :";
                 for (int i = 0; i < this.Sorts.Count; i++)
                 {
                     
                     result+= string.Format("{0,20}{1,30}",this.Sorts[i].NomSort ,"Degats = "+this.Sorts[i].NbDegatsMin+"-"+ this.Sorts[i].NbDegatsMax)+"\n"+"       ";
                 }
-            }
-                
-                   
+              }
+                      
             return result;
         }
     }
