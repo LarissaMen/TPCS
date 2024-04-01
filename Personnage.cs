@@ -249,10 +249,10 @@ namespace TP2
                     ptsDefense = aleatoire.Next(NB_PTS_DEFENSE_MIN_CLASSE, NB_DEFENSE_MAX_ARCHER_MOINE+1);
                     ptsVieMax=NB_PTSVIE_MAX_MOINE;
                     break;
-                    //default: 
-                    //throw new InvalidOperationException("");
+                default:
+                    throw new InvalidOperationException("");
 
-   
+
             }
             StatsPersonnage stats = new StatsPersonnage(ptsVieMax, ptsAttaque, ptsDefense);
             return stats;
