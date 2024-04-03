@@ -59,26 +59,67 @@ namespace TP2
             this.Ennemi = ennemi;
             this.NoTableau=0;
         }
+        //public bool EngagerCombat()
+        //{
+        //    bool joueurEstGagnant = true;
+        //    Random aleatoire = new Random();
+
+        //    while (!this.Joueur.EstMort() && !this.Ennemi.EstMort())
+        //    {
+
+        //        bool attaquant = aleatoire.Next(MIN, MAX + 1) % 2 == 0;
+        //        if (attaquant)
+        //        {
+
+        //            this.Joueur.Attaquer(this.Ennemi);
+        //            if(!ennemi.EstMort())
+        //            this.Ennemi.Attaquer(this.Joueur);
+        //        }
+        //        else
+        //        {
+        //            this.Ennemi.Attaquer(this.Joueur);
+        //            if (!joueur.EstMort())
+        //                this.Joueur.Attaquer(this.Ennemi);
+        //        }
+        //    }
+
+        //    if (this.Joueur.EstMort())
+        //    {
+        //        joueurEstGagnant = false;
+        //    }
+        //    return joueurEstGagnant;
+        //}
         public bool EngagerCombat()
         {
             bool joueurEstGagnant = true;
             Random aleatoire = new Random();
-            bool attaquant= aleatoire.Next(MIN, MAX+1)%2==0;
-         
+
             while (!this.Joueur.EstMort() && !this.Ennemi.EstMort())
             {
+                bool attaquant = aleatoire.Next(MIN, MAX + 1) % 2 == 0;
+
                 if (attaquant)
                 {
+                    // Le joueur attaque en premier
                     this.Joueur.Attaquer(this.Ennemi);
+                    if (!this.Ennemi.EstMort())
+                        this.Ennemi.Attaquer(this.Joueur);
+                }
+                else
+                {
+                 
                     this.Ennemi.Attaquer(this.Joueur);
-
+                    if (!this.Joueur.EstMort())
+                        this.Joueur.Attaquer(this.Ennemi);
                 }
             }
+
             if (this.Joueur.EstMort())
             {
-                joueurEstGagnant =false;
+                joueurEstGagnant = false;
             }
-            return joueurEstGagnant; 
+
+            return joueurEstGagnant;
         }
         public void RecueillirRecompense()
         {

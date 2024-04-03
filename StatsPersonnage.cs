@@ -31,7 +31,7 @@ namespace TP2
 			get { return ptsVieMax; }
 			set
             {
-                if (value<=0)
+                if (value<0)
                 {
                     throw new ArgumentOutOfRangeException("Les points de vie maximum ne doivent pas être négatifs");
                 }
@@ -43,7 +43,7 @@ namespace TP2
         {
 			get { return ptsAttaque; }
 			set {
-				if (value<=0)
+				if (value<0)
 				{
 					throw new ArgumentOutOfRangeException("Les points d'attaques ne doivent pas être négatifs");
 				}
@@ -56,7 +56,7 @@ namespace TP2
         {
 			get { return ptsDefense; }
 			set {
-                if (value<=0)
+                if (value<0)
                 {
                     throw new ArgumentOutOfRangeException("Les points de defenses ne doivent pas être négatifs");
                 }
@@ -88,7 +88,7 @@ namespace TP2
 		public bool EstMort()
 		{
 			bool estMort=false;
-			if (this.PtsVie==0)
+			if (this.PtsVie<=0)
                 estMort=true;
 			return estMort;
         }

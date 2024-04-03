@@ -209,9 +209,9 @@ namespace TP2
             if( aleatoire.Next(MIN_DE, MAX_DE+1)>2)
 			{
 				degats=this.CalculerDegatsInfliges(ennemi);
-				ennemi.RecevoirDegats(ennemi,degats);
+				ennemi.RecevoirDegats(degats);
 				
-				this.DegatsDernierCombats.Add(-degats);
+				this.DegatsDernierCombats.Add(degats);
 			}
         
         }
@@ -227,39 +227,38 @@ namespace TP2
 				case Classe.Archer:
                      ptsAttaque = aleatoire.Next(NB_ATTAQUE_MIN_CLASSE, NB_ATTAQUE_MAX_ARCHER+1);
                      ptsDefense = aleatoire.Next(NB_PTS_DEFENSE_MIN_CLASSE, NB_DEFENSE_MAX_ARCHER+1);
-                     ptsVieMax=NB_PTSVIE_MAX_ARCHER;
+                    ptsVieMax = aleatoire.Next(NB_ATTAQUE_MIN_CLASSE, NB_PTSVIE_MAX_ARCHER + 1);
                     break;
 			    case Classe.Mage:
                     ptsAttaque = aleatoire.Next(NB_ATTAQUE_MIN_CLASSE, NB_ATTAQUE_MAX_MAGE+1);
                     ptsDefense = aleatoire.Next(NB_PTS_DEFENSE_MIN_CLASSE, NB_DEFENSE_MAX_MAGE+1);
-                    ptsVieMax=NB_PTSVIE_MAX_MAGE;
+                    ptsVieMax = aleatoire.Next(NB_ATTAQUE_MIN_CLASSE, NB_PTSVIE_MAX_MAGE + 1);
                     break;
                 case Classe.Guerrier:
                     ptsAttaque = aleatoire.Next(NB_PTSVIE_MIN_GUERRIER , NB_ATTAQUE_MAX_GUERRIER+1);
                     ptsDefense = aleatoire.Next(NB_PTS_DEFENSE_MIN_CLASSE, NB_DEFENSE_MAX_GUERRIER+1);
-                    ptsVieMax=NB_PTSVIE_MAX_GUERRIER;
+                    ptsVieMax = aleatoire.Next(NB_PTSVIE_MIN_GUERRIER, NB_PTSVIE_MAX_GUERRIER + 1);
                     break;
                 case Classe.Assassin:
                     ptsAttaque = aleatoire.Next(NB_ATTAQUE_MIN_CLASSE, NB_ATTAQUE_MAX_ASSASSIN+1);
                     ptsDefense = aleatoire.Next(NB_PTS_DEFENSE_MIN_CLASSE, NB_DEFENSE_MAX_ASSASSIN+1);
-                    ptsVieMax=NB_PTSVIE_MAX_ASSASSIN;
+                    ptsVieMax = aleatoire.Next(NB_ATTAQUE_MIN_CLASSE, NB_PTSVIE_MAX_ASSASSIN + 1);
                     break;
                 case Classe.Moine:
                     ptsAttaque = aleatoire.Next(NB_ATTAQUE_MIN_CLASSE, NB_ATTAQUE_MAX_ARCHER_MOINE+1);
                     ptsDefense = aleatoire.Next(NB_PTS_DEFENSE_MIN_CLASSE, NB_DEFENSE_MAX_ARCHER_MOINE+1);
-                    ptsVieMax=NB_PTSVIE_MAX_MOINE;
+                    ptsVieMax = aleatoire.Next(NB_ATTAQUE_MIN_CLASSE, NB_PTSVIE_MAX_MOINE + 1);
                     break;
-                default:
-                    throw new InvalidOperationException("");
+            
 
 
             }
             StatsPersonnage stats = new StatsPersonnage(ptsVieMax, ptsAttaque, ptsDefense);
             return stats;
         }
-		public void RecevoirDegats(Personnage ennemi ,int degats)
+		public void RecevoirDegats(int degats)
         {
-            if (ennemi.EstMort())
+            if (this.EstMort())
             {
                 throw new InvalidOperationException("Le personnage est déjà mort");
             }
@@ -267,11 +266,11 @@ namespace TP2
 
 			if(degats>0)
 			{
-                ennemi.Stats.CalculerPtsVieApresAttaque(degats);
+                this.Stats.CalculerPtsVieApresAttaque(degats);
                 
             }
          
-            ennemi.DegatsDernierCombats.Add(degats);
+            this.DegatsDernierCombats.Add(-degats);
  
         }
 		public int CalculerDegatsInfliges(Personnage ennemi)
