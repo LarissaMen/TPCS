@@ -7,4 +7,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="TP2Tests\**" />
+    <EmbeddedResource Remove="TP2Tests\**" />
+    <None Remove="TP2Tests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.8" />
+  </ItemGroup>
+
 </Project>
