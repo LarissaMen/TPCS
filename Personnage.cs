@@ -82,22 +82,6 @@ namespace TP2
             //questin à poser
 		}
 
-
-        //public Arme Arme
-        //{
-        //    get { return arme; }
-        //    set
-        //    {
-        //        if (this.Classe == Classe.Mage && (value == Arme.EpeeBouclier || value == Arme.EpeeDeuxMains))
-        //        {
-        //            throw new InvalidOperationException("Le magicien ne peut pas choisir l'arme épée!");
-        //        }
-        //        else
-        //        {
-        //            arme = value;
-        //        }
-        //    }
-        //}
         public Arme Arme
         {
             get { return arme; }
@@ -209,10 +193,12 @@ namespace TP2
             if( aleatoire.Next(MIN_DE, MAX_DE+1)>2)
 			{
 				degats=this.CalculerDegatsInfliges(ennemi);
+
 				ennemi.RecevoirDegats(degats);
 				
 				this.DegatsDernierCombats.Add(degats);
 			}
+            
         
         }
 		private  StatsPersonnage DeterminerStatsPersonnage()

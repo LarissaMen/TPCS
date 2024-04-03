@@ -20,7 +20,7 @@ namespace TP2.Tests
             Personnage joueur = new Personnage("Joueur", Classe.Guerrier, new List<Sort>(), Arme.MainsNues);
             Personnage ennemi = new Personnage("Ennemi", Classe.Assassin, new List<Sort>(), Arme.MainsNues);
             GestionJeux gestionDeJeu = new GestionJeux(joueur, ennemi);
-
+            joueur.Stats.PtsAttaque=30;
             //Act
 
             gestionDeJeu.EngagerCombat();
@@ -83,8 +83,10 @@ namespace TP2.Tests
 
             Personnage joueur = new Personnage("Joueur", Classe.Guerrier, new List<Sort>(), Arme.MainsNues);
             Personnage ennemi = new Personnage("Ennemi", Classe.Archer, new List<Sort>(), Arme.MainsNues);
-         
+         //On a dû initialiser les stats du joueur pour s'assurer qu'il est plus fort que l'ennemi dans ce 
+         //scénario et éviter ainsi le caractère aléatoire de la méthode attaquer.
             joueur.Stats.PtsAttaque=100;
+            ennemi.Stats.PtsAttaque=0;
             ennemi.Stats.PtsVie = 1;
 
 
@@ -105,8 +107,10 @@ namespace TP2.Tests
 
             Personnage joueur = new Personnage("Joueur", Classe.Guerrier, new List<Sort>(), Arme.MainsNues);
             Personnage ennemi = new Personnage("Ennemi", Classe.Archer, new List<Sort>(), Arme.MainsNues);
+            //On a dû initialiser les stats du joueur pour s'assurer qu'il est plus fort que l'ennemi dans ce 
+            //scénario et éviter ainsi le caractère aléatoire de la méthode attaquer.
             ennemi.Stats.PtsAttaque = 100;
-            joueur.Stats.PtsAttaque=1;
+            joueur.Stats.PtsAttaque=0;
 
 
 
