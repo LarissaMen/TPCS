@@ -83,6 +83,8 @@ namespace TP2.Tests
 
             Personnage joueur = new Personnage("Joueur", Classe.Guerrier, new List<Sort>(), Arme.MainsNues);
             Personnage ennemi = new Personnage("Ennemi", Classe.Archer, new List<Sort>(), Arme.MainsNues);
+         
+            joueur.Stats.PtsAttaque=100;
             ennemi.Stats.PtsVie = 1;
 
 
@@ -100,14 +102,14 @@ namespace TP2.Tests
         public void EngagerCombat_WhenEnnemiDefeatsJoueur_ReturnsFalse()
         {
             // Arrange
-         
+
             Personnage joueur = new Personnage("Joueur", Classe.Guerrier, new List<Sort>(), Arme.MainsNues);
             Personnage ennemi = new Personnage("Ennemi", Classe.Archer, new List<Sort>(), Arme.MainsNues);
-            ennemi.Stats.PtsAttaque = 7;
+            ennemi.Stats.PtsAttaque = 100;
             joueur.Stats.PtsAttaque=1;
-           
 
-           
+
+
             GestionJeux gestionJeux = new GestionJeux(joueur, ennemi);
 
             // Act
@@ -118,7 +120,7 @@ namespace TP2.Tests
             Assert.IsTrue(joueur.EstMort());
             Assert.IsFalse(ennemi.EstMort());
         }
-     
+
     }
        
 }

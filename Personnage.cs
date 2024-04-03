@@ -103,7 +103,7 @@ namespace TP2
             get { return arme; }
             set
             {
-                if (this.CanChooseEpee(value))
+                if (this.PeutChoisirEpee(value))
                 {
                     arme = value;
                 }
@@ -114,7 +114,7 @@ namespace TP2
             }
         }
 
-        private bool CanChooseEpee(Arme arme)
+        private bool PeutChoisirEpee(Arme arme)
         {
             if (this.Classe == Classe.Mage && (arme == Arme.EpeeBouclier || arme == Arme.EpeeDeuxMains))
             {
@@ -198,7 +198,7 @@ namespace TP2
 			{
 				throw new ArgumentNullException("Le personnage  ne doit pas être null");
 			}
-                if (this.EstMort())
+                if (this.EstMort() )
 			{
 				throw new InvalidOperationException("Le personnage est déjà mort");
 			}
